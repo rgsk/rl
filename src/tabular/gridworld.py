@@ -1,3 +1,5 @@
+import random
+
 ROWS, COLS = 3, 4
 WALLS = {(1, 1)}
 TERMINALS = {(0, 3): +1.0, (1, 3): -1.0}
@@ -44,3 +46,20 @@ def show(V=None, pi=None):
                 row.append(f"  {ACTIONS[pi[s]]}   ")
         print(" ".join(row))
     print()
+
+
+START = (2, 0)
+
+
+def reset(explore=False):
+    if explore:
+        return random.choice([s for s in STATES if s not in TERMINALS])
+    return START
+
+
+
+def sample_step(s, a):
+    """Sample ONE outcome. This is all the agent gets to see."""
+    outcomes = transitions(s, a)
+    p, ns, r, done = random.choices(outcomes, weights=[o[0] for o in outcomes])[0]
+    return ns, r, done
