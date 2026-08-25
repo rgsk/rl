@@ -1,4 +1,5 @@
-from gridworld import STATES, TERMINALS, show, transitions
+import gymnasium as gym
+from gridworld import STATES, TERMINALS, reset, sample_step, show, transitions
 
 
 def q_value(s, a, V, gamma=1.0):
@@ -34,3 +35,36 @@ def greedy_policy(V, gamma=1.0):
             continue
         pi[s] = max(range(4), key=lambda a: q_value(s, a, V, gamma))
     return pi
+
+
+
+class GridEnv:
+    n_actions = 4
+
+    def __init__(self, explore=False):
+        self.explore = explore
+
+    def reset(self):
+        self.s = reset(explore=self.explore)
+        return self.s
+
+    def step(self, a):
+        ns, r, done = sample_step(self.s, a)
+        self.s = ns
+        return ns, r, done
+
+
+
+
+class GymEnv:
+    def __init__(self, name, **kw):
+        self.env = gym.make(name, **kw)
+        self.n_actions = self.env.action_space.n
+
+    def reset(self):
+        s, _ = self.env.reset()
+        return s
+
+    def step(self, a):
+        s, r, term, trunc, _ = self.env.step(a)
+        return s, r, term or trunc
