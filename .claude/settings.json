@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "NotebookEdit|Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.notebook_path // .tool_input.file_path // empty' | { read -r f; case \"$f\" in *.ipynb|*.py) ruffgrid save \"$f\";; esac; } || true",
+            "statusMessage": "ruffgrid save"
+          }
+        ]
+      }
+    ]
+  }
+}

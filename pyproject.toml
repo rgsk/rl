@@ -15,4 +15,9 @@ dependencies = [
 [dependency-groups]
 dev = [
     "ipykernel>=7.3.0",
+    "ruff>=0.17.3",
 ]
+
+[tool.ruff]
+# folders the notebooks import from (sys.path.append), so their modules sort as first-party (I001)
+src = ["src", "src/tabular"]
