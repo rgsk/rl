@@ -5,7 +5,7 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "gymnasium[classic-control,toy-text]>=1.3.0",
+    "gymnasium[classic-control,mujoco,toy-text]>=1.3.0",
     "joblib>=1.6.0",
     "matplotlib>=3.11.1",
     "numpy>=2.5.2",
@@ -13,11 +13,9 @@ dependencies = [
 ]
 
 [dependency-groups]
-dev = [
-    "ipykernel>=7.3.0",
-    "ruff>=0.17.3",
-]
+dev = ["ipykernel>=7.3.0", "ruff>=0.17.3"]
 
 [tool.ruff]
+line-length = 100
 # folders the notebooks import from (sys.path.append), so their modules sort as first-party (I001)
 src = ["src", "src/tabular"]
